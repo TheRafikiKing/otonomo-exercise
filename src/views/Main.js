@@ -50,6 +50,7 @@ class Main extends Component {
   //add new car to state
   addCar = () => {
       const carVin = this.state.newCarVin
+      // validate entered vin is valid number and not exist already
       if (!this.vinValidator.test(carVin) || carVin in this.state.carlist) {
         return this.setState({vinErr: true}) 
       }
@@ -83,6 +84,8 @@ class Main extends Component {
     // send to child wheter the filter is active
     const isFiltered = this.state.filterByLowFuelLevel
 
+
+    //TBD - convert style to classes
     return (
             <div className={cn('d-flex','Main')} >
                 <div className={cn('d-flex','flex-column','h-100')} 
@@ -97,17 +100,27 @@ class Main extends Component {
                        marginRight:'-0.675em',
                        marginLeft:'-0.675em'
                       }}>
-                    <div style={{padding:'0.675em', paddingLeft:'1.350em'}}>
-                      <div className={cn('d-flex')} 
-                          style={{flexBasis:1}}
-                      >
+                    <div style={{padding:'0.675em', 
+                                paddingLeft:'1.350em',
+                                paddingRight:'1.350em'}}>
+                      {/* TBD - convert to action bar componenet */}
+                      <div className={cn('d-flex')} style={{marginBottom:'1.5em'}}>
+                        <div className={cn('d-flex','flex-column')} 
+                            style={{position:'relative',flex:'1 1 60%',marginRight:'10px'}}>
                           <Input 
+                            className={cn('h-100')}
                             name='newCarVin' 
-                            onChange={this.handleInputChange} 
-                            style={{ width:'70%', marginRight:'10px'}}/>
-                          <Button onClick={this.addCar} style={{ width:'20%' }}> + Add</Button>
+                            onChange={this.handleInputChange} />
+                          <label style={{position:'absolute',bottom:'-1.5em'}}>Enter VIN</label>
+                        </div>
+                        <div className={cn('d-flex','flex-column')} style={{position:'relative',flex:1}}>
+                          <Button onClick={this.addCar}> + Add</Button>
+                        </div>
                       </div>
-                      {this.state.vinErr && <span style={{padding:'0.375em',color:'red'}}>Your Vin is invalid</span>}
+                      {
+                      this.state.vinErr && 
+                        <span style={{padding:'0.375em',color:'red'}}>Your Vin is invalid</span>
+                      }
                       <div className={cn('d-flex')} >
                         <ul style={{listStyle:'none', padding:'0'}}>
                             {
